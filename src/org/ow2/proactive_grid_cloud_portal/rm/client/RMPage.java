@@ -54,6 +54,10 @@ import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.ImgButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.CheckboxItem;
+import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
+import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.SectionStack;
 import com.smartgwt.client.widgets.layout.SectionStackSection;
@@ -144,6 +148,17 @@ public class RMPage implements LogListener {
         topSection.setExpanded(true);
         topSection.setItems(topPane);
 
+        final CheckboxItem nodesUserByme = new CheckboxItem("nodesUsedByMe", "Nodes used by me");
+        nodesUserByme.setValue(false);
+        nodesUserByme.addChangedHandler(new ChangedHandler() {
+            public void onChanged(ChangedEvent event) {
+                controller.filterNodesUsedByMe(nodesUserByme.getValueAsBoolean());
+            }
+        });
+        DynamicForm checkBoxes = new DynamicForm();
+        checkBoxes.setNumCols(2);
+        checkBoxes.setItems(nodesUserByme);
+
         ImgButton expandButton = new ImgButton();
         expandButton.setWidth(16);
         expandButton.setHeight(16);
@@ -171,7 +186,7 @@ public class RMPage implements LogListener {
         closeButton.setShowRollOver(false);
         closeButton.setShowDown(false);
 
-        topSection.setControls(expandButton, closeButton);
+        topSection.setControls(checkBoxes, expandButton, closeButton);
 
         SectionStackSection botSection = new SectionStackSection();
         botSection.setTitle("Details");

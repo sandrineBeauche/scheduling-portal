@@ -39,6 +39,7 @@ package org.ow2.proactive_grid_cloud_portal.rm.client;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.ow2.proactive_grid_cloud_portal.common.client.Listeners.LogListener;
@@ -67,7 +68,7 @@ public class RMModelImpl extends RMModel implements RMEventDispatcher {
     private boolean logged = false;
     private String login = null;
     private String sessionId = null;
-    private HashMap<String, NodeSource> nodes = null;
+    private Map<String, NodeSource> nodes = null;
     private Node selectedNode = null;
     private Host selectedHost = null;
     private NodeSource selectedNodeSource = null;
@@ -96,6 +97,8 @@ public class RMModelImpl extends RMModel implements RMEventDispatcher {
 
     private int numPhysicalHosts = 0;
     private int numVirtualHosts = 0;
+
+    private boolean filterNodesUsedByMe = false;
 
     RMModelImpl() {
         super();
@@ -149,10 +152,43 @@ public class RMModelImpl extends RMModel implements RMEventDispatcher {
         return this.nodes;
     }
 
-    void setNodes(HashMap<String, NodeSource> nodes) {
-        this.nodes = nodes;
+    void setNodes(Map<String, NodeSource> nodes) {
+        // TODO proper deep copy
+        Map<String, NodeSource> filteredNodes = nodes;
+
+        for (Map.Entry<String, NodeSource> entry : filteredNodes.entrySet()) {
+
+            entry.setValue(new NodeSource(entry.getValue()));
+
+            entry.getValue().setHosts(new HashMap<String, Host>(entry.getValue().getHosts()));
+            Map<String, Host> hosts = entry.getValue().getHosts();
+
+            for (Map.Entry<String, Host> stringHostEntry : hosts.entrySet()) {
+
+                Host value = stringHostEntry.getValue();
+                Host host = new Host(value.getHostName(),value.getSourceName(), value.getNodes(), value.isVirtual());
+                stringHostEntry.setValue(host);
+                host.setNodes(new HashMap<String, Node>(host.getNodes()));
+
+                for ( Map.Entry<String, Node> nodeEntry : host.getNodes().entrySet()) {
+                    Node node = nodeEntry.getValue();
+                    nodeEntry.setValue(new Node(node));
+
+                }
+                Iterator<Map.Entry<String, Node>> iterator = host.getNodes().entrySet().iterator();
+                while (iterator.hasNext()) {
+                    Map.Entry<String, Node> nodeEntry = iterator.next();
+                    if (filterNodesUsedByMe && !nodeEntry.getValue().getNodeOwner().equals(login)) {
+                        iterator.remove();
+                        System.out.println("Removing "+nodeEntry.getValue().getNodeUrl());
+                    }
+                }
+            }
+        }
+
+        this.nodes = filteredNodes;
         for (NodesListener list : this.nodesListeners) {
-            list.nodesUpdated(nodes);
+            list.nodesUpdated(filteredNodes);
         }
     }
 
@@ -435,6 +471,11 @@ public class RMModelImpl extends RMModel implements RMEventDispatcher {
     @Override
     public int getNumVirtualHosts() {
         return this.numVirtualHosts;
+    }
+
+    @Override
+    public void setFilterNodesUsedByMe(Boolean filterNodesUsedByMe) {
+        this.filterNodesUsedByMe = filterNodesUsedByMe;
     }
 
     @Override

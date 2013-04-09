@@ -152,4 +152,5 @@ public abstract class RMModel implements Model {
      */
     public abstract int getNumVirtualHosts();
 
+    public abstract void setFilterNodesUsedByMe(Boolean filterNodesUsedByMe);
 }

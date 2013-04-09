@@ -293,7 +293,7 @@ public class CompactView implements NodesListener, NodeSelectedListener {
                     for (Entry<String, Host> oldHost : oldNs.getValue().getHosts().entrySet()) {
                         /* Keep host */
                         Host newHost = newNs.getHosts().get(oldHost.getKey());
-                        if (newHost != null && newHost.getNodes().size() > 0) {
+                        if (newHost != null) {
                             for (Entry<String, Node> oldNode : oldHost.getValue().getNodes().entrySet()) {
                                 /* Keep node */
                                 if (newHost.getNodes().containsKey(oldNode.getKey())) {
@@ -330,7 +330,7 @@ public class CompactView implements NodesListener, NodeSelectedListener {
                 }
             }
         }
-        this.oldNodes = nodes;
+        this.oldNodes = new HashMap<String, NodeSource>(nodes);
     }
 
     private void removeTile(String name) {

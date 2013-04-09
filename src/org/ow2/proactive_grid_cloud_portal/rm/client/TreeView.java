@@ -69,10 +69,7 @@ import com.smartgwt.client.widgets.tree.events.NodeContextClickHandler;
  * Displays current nodes in a hierarchical tree view
  * <p>
  * NodeSource > Host > Node
- * 
- * 
- * 
- * 
+ *
  * @author mschnoor
  *
  */
@@ -371,7 +368,7 @@ public class TreeView implements NodesListener, NodeSelectedListener {
             }
         }
 
-        this.oldNodes = nodes;
+        this.oldNodes = new HashMap<String, NodeSource>(nodes);
 
         this.treeGrid.markForRedraw();
     }

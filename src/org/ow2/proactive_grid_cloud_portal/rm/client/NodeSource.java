@@ -72,6 +72,14 @@ public class NodeSource {
         this.deploying = new HashMap<String, Node>();
     }
 
+    NodeSource(NodeSource nodeSource) {
+        this.sourceDescription = nodeSource.sourceDescription;
+        this.sourceName = nodeSource.sourceName;
+        this.nodeSourceAdmin = nodeSource.nodeSourceAdmin;
+        this.hosts = new HashMap<String, Host>(nodeSource.hosts);
+        this.deploying = new HashMap<String, Node>(nodeSource.deploying);
+    }
+
     public Map<String, Host> getHosts() {
         return hosts;
     }
@@ -92,6 +100,10 @@ public class NodeSource {
         return nodeSourceAdmin;
     }
 
+    public void setHosts(Map<String, Host> hosts) {
+        this.hosts = hosts;
+    }
+
     public static class Host {
 
         /** all nodes deployed on this host for one specific nodesource*/
@@ -107,6 +119,16 @@ public class NodeSource {
             this.hostName = hostName;
             this.nodes = new HashMap<String, Node>();
             this.sourceName = sourceName;
+        }
+
+        public Host(String hostName, String sourceName, Map<String, Node> nodes, boolean virtual) {
+            this(hostName, sourceName);
+            this.nodes.putAll(nodes);
+            this.virtual = virtual;
+        }
+
+        public void setNodes(Map<String, Node> nodes) {
+            this.nodes = nodes;
         }
 
         public Map<String, Node> getNodes() {
@@ -183,6 +205,22 @@ public class NodeSource {
                 this.description = description;
                 this.defaultJMXUrl = defaultJMXUrl;
                 this.proactiveJMXUrl = proactiveJMXUrl;
+            }
+
+            Node(Node node){
+                this.nodeUrl = node.nodeUrl;
+                this.nodeState = node.nodeState;
+                this.nodeInfo = node.nodeInfo;
+                this.timeStampFormatted = node.timeStampFormatted;
+                this.nodeProvider = node.nodeProvider;
+                this.nodeOwner = node.nodeOwner;
+                this.sourceName = node.sourceName;
+                this.timeStamp = node.timeStamp;
+                this.hostName = node.hostName;
+                this.vmName = node.vmName;
+                this.description = node.description;
+                this.defaultJMXUrl = node.defaultJMXUrl;
+                this.proactiveJMXUrl = node.proactiveJMXUrl;
             }
 
             public String getNodeUrl() {

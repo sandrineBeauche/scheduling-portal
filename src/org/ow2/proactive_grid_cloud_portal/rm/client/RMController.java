@@ -821,6 +821,11 @@ public class RMController extends Controller implements UncaughtExceptionHandler
         }
     }
 
+    public void filterNodesUsedByMe(Boolean nodesUsedByMe) {
+        model.setFilterNodesUsedByMe(nodesUsedByMe);
+        model.setNodes(model.getNodes());
+    }
+
     private abstract class NodeRemovalCallback {
         public abstract void run(boolean force);
     }
