@@ -41,6 +41,7 @@ import java.util.LinkedHashMap;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.ow2.proactive_grid_cloud_portal.scheduler.client.model.SchedulerModelImpl;
 
 import static org.junit.Assert.assertTrue;
 

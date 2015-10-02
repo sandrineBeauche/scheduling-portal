@@ -105,7 +105,7 @@ public class Job implements Serializable, Comparable<Job> {
      * Setter of the job ID.
      * @param id the new ID that will be set.
      */
-    public void setID(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 

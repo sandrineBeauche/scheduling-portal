@@ -34,7 +34,7 @@
  * ################################################################
  * $$PROACTIVE_INITIAL_DEV$$
  */
-package org.ow2.proactive_grid_cloud_portal.scheduler.client;
+package org.ow2.proactive_grid_cloud_portal.scheduler.client.model;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -42,7 +42,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.ow2.proactive_grid_cloud_portal.common.client.Model;
-import org.ow2.proactive_grid_cloud_portal.scheduler.client.suggestions.PrefixWordSuggestOracle.TagSuggestion;
+import org.ow2.proactive_grid_cloud_portal.scheduler.client.Job;
+import org.ow2.proactive_grid_cloud_portal.scheduler.client.JobOutput;
+import org.ow2.proactive_grid_cloud_portal.scheduler.client.JobUsage;
+import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerStatus;
+import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerUser;
+import org.ow2.proactive_grid_cloud_portal.scheduler.client.Task;
+import org.ow2.proactive_grid_cloud_portal.scheduler.client.controller.PrefixWordSuggestOracle.TagSuggestion;
 import org.ow2.proactive_grid_cloud_portal.scheduler.shared.JobVisuMap;
 
 
@@ -59,53 +65,15 @@ public abstract class SchedulerModel implements Model {
      */
     public abstract SchedulerStatus getSchedulerStatus();
 
-    /**
-     * @return local view of all the jobs known by the scheduler server
-     */
-    public abstract LinkedHashMap<Integer, Job> getJobs();
+    
 
-    /**
-     * @return the number of jobs to be displayed on a page
-     */
-    public abstract int getJobPageSize();
-
-    /**
-     * @return the job page currently displayed
-     */
-    public abstract int getJobPage();
-
-    /**
-     * @param jobId the Id of a Job
-     * @return the corresponding job if known by the Model, or null
-     */
-    public abstract Job getJob(int jobId);
-
-    /**
-     * @return the revision id associated with the currently held JobBag
-     */
-    public abstract long getJobsRevision();
-
-    /**
-     * @return the currently selected job
-     */
-    public abstract Job getSelectedJob();
     
     
-    /**
-     * @return the current tag used to filter the list of tasks.
-     */
-    public abstract String getCurrentTagFilter();
+
     
 
     /**
-     * @return the list of tasks corresponding the currently selected job
-     */
-    public abstract List<Task> getTasks();
-
-    /**
-     * @return true if the current tasks list does not match the selected job
-     */
-    public abstract boolean isTasksDirty();
+    
 
     /**
      * If it has been previously stored, the model may have cached the partial or
@@ -143,8 +111,7 @@ public abstract class SchedulerModel implements Model {
      */
     public abstract JobVisuMap getJobVisuMap(String jobId);
 
-    public abstract void emptyJobs();
-
+    
     public abstract String getJobHtml(String jobId);
 
     public abstract void setJobHtml(String jobId, String curHtml);
@@ -165,25 +132,9 @@ public abstract class SchedulerModel implements Model {
      */
     public abstract List<RemoteHint> getRemoteHints();
 
-    /**
-     * @return true if the model should only store the jobs of the current user
-     */
-    public abstract boolean isFetchMyJobsOnly();
+    
 
-    /**
-     * @return true if the model should store pending jobs
-     */
-    public abstract boolean isFetchPendingJobs();
-
-    /**
-     * @return true if the model should store running jobs
-     */
-    public abstract boolean isFetchRunningJobs();
-
-    /**
-     * @return true if the model should store finished jobs
-     */
-    public abstract boolean isFetchFinishedJobs();
+    
 
     /**
      * @return the list of users connected to the scheduler
@@ -206,16 +157,10 @@ public abstract class SchedulerModel implements Model {
     public abstract HashMap<String, String> getSchedulerStatistics();
 
     public abstract List<JobUsage> getUsage();
+     
     
+    public abstract JobsModel getJobsModel();
     
-    public abstract Collection<TagSuggestion> getAvailableTags(String query);
-    
-    public abstract void setTagSuggestions(Collection<String> tags);
-    
-    public abstract void setTaskAutoRefreshOption(boolean value);
-    
-    public abstract boolean getTaskAutoRefreshOption();
-    
-    
+    public abstract TaskModel getTasksModel();
    
 }

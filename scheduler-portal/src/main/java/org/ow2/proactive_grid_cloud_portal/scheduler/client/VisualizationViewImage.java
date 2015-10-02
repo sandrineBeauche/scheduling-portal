@@ -40,7 +40,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.ow2.proactive_grid_cloud_portal.scheduler.client.controller.SchedulerController;
 import org.ow2.proactive_grid_cloud_portal.scheduler.shared.JobVisuMap;
+
 import com.google.gwt.event.dom.client.LoadEvent;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;

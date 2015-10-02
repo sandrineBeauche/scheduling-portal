@@ -40,6 +40,8 @@ import java.util.List;
 
 import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerListeners.JobSelectedListener;
 import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerListeners.TasksUpdatedListener;
+import org.ow2.proactive_grid_cloud_portal.scheduler.client.controller.SchedulerController;
+
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.util.StringUtil;
 import com.smartgwt.client.widgets.Canvas;

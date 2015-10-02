@@ -34,9 +34,10 @@
  * ################################################################
  * $$PROACTIVE_INITIAL_DEV$$
  */
-package org.ow2.proactive_grid_cloud_portal.scheduler.client;
+package org.ow2.proactive_grid_cloud_portal.scheduler.client.model;
 
 import org.ow2.proactive_grid_cloud_portal.common.client.EventDispatcher;
+import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerListeners;
 import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerListeners.JobOutputListener;
 import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerListeners.JobSelectedListener;
 import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerListeners.JobsUpdatedListener;
@@ -45,6 +46,8 @@ import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerListeners.S
 import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerListeners.StatisticsListener;
 import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerListeners.TagSuggestionListener;
 import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerListeners.TasksUpdatedListener;
+import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerListeners.ThirdPartyCredentialsListener;
+import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerListeners.UsageListener;
 import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerListeners.UsersListener;
 import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerListeners.VisualizationListener;
 
@@ -56,12 +59,6 @@ import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerListeners.V
  *
  */
 public interface SchedulerEventDispatcher extends EventDispatcher {
-
-    void addJobsUpdatedListener(JobsUpdatedListener listener);
-
-    void addJobSelectedListener(JobSelectedListener listener);
-
-    void addTasksUpdatedListener(TasksUpdatedListener listener);
 
     void addSchedulerStatusListener(SchedulerStatusListener listener);
 
@@ -81,6 +78,5 @@ public interface SchedulerEventDispatcher extends EventDispatcher {
 
     void setThirdPartyCredentialsListener(
             SchedulerListeners.ThirdPartyCredentialsListener thirdPartyCredentialsListener);
-    
-    void addTagSuggestionListener(TagSuggestionListener listener);
+
 }

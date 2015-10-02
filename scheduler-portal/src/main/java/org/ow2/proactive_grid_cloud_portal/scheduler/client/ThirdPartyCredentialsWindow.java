@@ -36,6 +36,8 @@ package org.ow2.proactive_grid_cloud_portal.scheduler.client;
 
 import java.util.Set;
 
+import org.ow2.proactive_grid_cloud_portal.scheduler.client.controller.SchedulerController;
+
 import com.smartgwt.client.data.Record;
 import com.smartgwt.client.data.SortSpecifier;
 import com.smartgwt.client.types.Autofit;

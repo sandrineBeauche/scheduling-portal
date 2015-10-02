@@ -37,6 +37,7 @@
 package org.ow2.proactive_grid_cloud_portal.scheduler.client;
 
 import org.ow2.proactive_grid_cloud_portal.common.client.Images;
+import org.ow2.proactive_grid_cloud_portal.scheduler.client.controller.SchedulerController;
 import org.ow2.proactive_grid_cloud_portal.scheduler.shared.SchedulerConfig;
 
 import com.smartgwt.client.data.DataSource;

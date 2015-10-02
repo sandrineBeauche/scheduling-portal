@@ -40,6 +40,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerListeners.UsersListener;
+import org.ow2.proactive_grid_cloud_portal.scheduler.client.controller.SchedulerController;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.smartgwt.client.types.SelectionStyle;

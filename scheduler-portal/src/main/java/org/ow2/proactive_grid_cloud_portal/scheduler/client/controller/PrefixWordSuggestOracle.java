@@ -1,4 +1,4 @@
-package org.ow2.proactive_grid_cloud_portal.scheduler.client.suggestions;
+package org.ow2.proactive_grid_cloud_portal.scheduler.client.controller;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,9 +9,9 @@ import org.ow2.proactive_grid_cloud_portal.common.client.Controller;
 import org.ow2.proactive_grid_cloud_portal.scheduler.client.Job;
 import org.ow2.proactive_grid_cloud_portal.scheduler.client.JobStatus;
 import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerListeners.JobSelectedListener;
-import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerModel;
-import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerModelImpl;
 import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerServiceAsync;
+import org.ow2.proactive_grid_cloud_portal.scheduler.client.model.SchedulerModelImpl;
+import org.ow2.proactive_grid_cloud_portal.scheduler.client.model.TasksModelImpl;
 
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
@@ -26,7 +26,7 @@ public class PrefixWordSuggestOracle extends SuggestOracle implements JobSelecte
 	
 	protected SchedulerServiceAsync scheduler;
 	
-	protected SchedulerModelImpl model;
+	protected TasksModelImpl model;
 	
 	protected long lastRequestTime = -1;
 	
@@ -37,10 +37,10 @@ public class PrefixWordSuggestOracle extends SuggestOracle implements JobSelecte
 	
 	
 	
-	public PrefixWordSuggestOracle(SchedulerModelImpl model, SchedulerServiceAsync scheduler) {
+	public PrefixWordSuggestOracle(TasksModelImpl model, SchedulerServiceAsync scheduler) {
 		this.model = model;
 		this.scheduler = scheduler;
-		this.model.addJobSelectedListener(this);
+		this.model.getSchedulerModel().addJobSelectedListener(this);
 	}
 	
 	
@@ -92,12 +92,12 @@ public class PrefixWordSuggestOracle extends SuggestOracle implements JobSelecte
 		
 		final String jobId = this.model.getSelectedJob().getId().toString();
 		
-		this.scheduler.getJobTaskTagsPrefix(model.getSessionId(), jobId, query, new AsyncCallback<String>() {
+		this.scheduler.getJobTaskTagsPrefix(model.getSchedulerModel().getSessionId(), jobId, query, new AsyncCallback<String>() {
 
     		public void onFailure(Throwable caught) {
     			String msg = Controller.getJsonErrorMessage(caught);
 
-    			PrefixWordSuggestOracle.this.model.logImportantMessage("Failed to update tags for job " +
+    			PrefixWordSuggestOracle.this.model.getSchedulerModel().logImportantMessage("Failed to update tags for job " +
     					jobId + " and prefix tag " + query + ": " + msg);
     		}
 
@@ -107,7 +107,7 @@ public class PrefixWordSuggestOracle extends SuggestOracle implements JobSelecte
     			JSONValue val = parseJSON(result);
     			JSONArray arr = val.isArray();
     			if (arr == null) {
-    				model.logCriticalMessage("Expected JSON Array: " + val.toString());
+    				model.getSchedulerModel().logCriticalMessage("Expected JSON Array: " + val.toString());
     			}
     			tags = getTagsFromJson(arr);
     			model.setTagSuggestions(tags);
@@ -151,9 +151,9 @@ public class PrefixWordSuggestOracle extends SuggestOracle implements JobSelecte
             // only shows up in eclipse dev mode
             t.printStackTrace();
 
-            this.model.logCriticalMessage(
+            this.model.getSchedulerModel().logCriticalMessage(
                     "JSON Parser failed " + t.getClass().getName() + ": " + t.getLocalizedMessage());
-            this.model.logCriticalMessage("input was: " + jsonStr);
+            this.model.getSchedulerModel().logCriticalMessage("input was: " + jsonStr);
             return new JSONObject();
         }
     }
